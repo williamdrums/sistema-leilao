@@ -10,17 +10,36 @@ public class Leilao {
 	private Long leilaoId;
 	private String descricao;
 	private List<Lance> lances;
-	
+
 	public Leilao(Long leilaoId,String descricao) {
-		
+
 		this.leilaoId =  leilaoId;
 		this.descricao =  descricao;
 		this.lances =  new ArrayList<Lance>();
 	}
-	
-	
+
+
 	public void propoe(Lance lance) {
-		lances.add(lance);
+		if(lances.isEmpty() || podeDarLance(lance.getUsuario())) {
+			lances.add(lance);
+		}
+	}
+
+
+	private boolean podeDarLance(Usuario usuario) {
+		return !ultimoLanceDado().getUsuario().equals(usuario) && qtdLancesDoUsuario(usuario) < 5;
+	}
+
+	private int qtdLancesDoUsuario(Usuario usuario) {
+		int total = 0;
+		for(Lance l : lances) {
+			if(l.getUsuario().equals(usuario)) total++;
+		}
+		return total;
+	}
+
+	private Lance ultimoLanceDado() {
+		return lances.get(lances.size()- 1);
 	}
 
 	public Long getLeilaoId() {
@@ -46,7 +65,7 @@ public class Leilao {
 	public void setLances(List<Lance> lances) {
 		this.lances = lances;
 	}
-	
-	
-	
+
+
+
 }
