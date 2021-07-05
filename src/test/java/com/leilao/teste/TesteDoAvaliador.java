@@ -1,5 +1,6 @@
 package com.leilao.teste;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,6 +28,16 @@ public class TesteDoAvaliador {
 		this.joao = new Usuario(1L,"João");
 		this.jose = new Usuario(2L,"José");
 		this.maria =  new Usuario(3L,"Maria");
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void naoDeveAvaliarLeiloesSemNenhumLanceDado() {
+		
+			Leilao leilao = new CriadorDeLeilao().para(1L,"Plastation 5 Novo").constroi();
+			
+			leiloeiro.avalia(leilao);
+			Assert.fail();
+			
 	}
 
 	@Test
